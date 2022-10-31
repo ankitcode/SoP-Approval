@@ -1,5 +1,5 @@
 var mongoose = require("mongoose"),
-  Schema = mongoose.Schema, 
+  Schema = mongoose.Schema,
   autoIncrement = require("mongoose-auto-increment");
 
 const SoPPortalDataSchema = new Schema({
@@ -39,16 +39,13 @@ const SoPPortalDataSchema = new Schema({
   },
   shutdownType: {
     occ: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
     postOcc: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
     emergency: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
   },
   workDetails: {
@@ -67,40 +64,32 @@ const SoPPortalDataSchema = new Schema({
   },
   premises: {
     powergrid: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
     other: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
   },
   shutdownWorkScope: {
     powergrid: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
     other: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
   },
   shutdownRequisite: {
     ptw: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
     ppe: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
     pep: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
     presence: {
-      type: Boolean,
-      default: false,
+      type: String,
     },
   },
   isolationSequence: {
@@ -121,17 +110,12 @@ const SoPPortalDataSchema = new Schema({
   },
   presenceOfEmp: {
     maintenanceHead: {
-      type: Boolean,
-      default: false,
-    },
-    stationInCharge: {
-      type: Boolean,
-      default: false,
-    },
-    alternate_1: {
       type: String,
     },
-    alternate_2: {
+    stationInCharge: {
+      type: String,
+    },
+    alternate: {
       type: String,
     },
   },
@@ -172,6 +156,10 @@ const SoPPortalDataSchema = new Schema({
       },
     },
   ],
+  sentStatus: {
+    type: Boolean,
+    default: false,
+  },
   currentlyWith: {
     type: mongoose.Schema.Types.ObjectId,
   },
@@ -182,7 +170,12 @@ const SoPPortalDataSchema = new Schema({
 });
 
 autoIncrement.initialize(mongoose.connection);
-SoPPortalDataSchema.plugin(autoIncrement.plugin, { model: 'SoPPortalData', field: 'sopID', startAt: 1000, incrementBy: 100 });
+SoPPortalDataSchema.plugin(autoIncrement.plugin, {
+  model: "SoPPortalData",
+  field: "sopID",
+  startAt: 1000,
+  incrementBy: 100,
+});
 
 const SoPPortalData = mongoose.model("SoPPortalData", SoPPortalDataSchema);
 SoPPortalData.createIndexes();

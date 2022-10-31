@@ -8,6 +8,7 @@ import CreateNew from "./components/Create_New";
 import ViewCreated from "./components/View_Created";
 import Sent from "./components/Sent";
 import SopPortalState from "./context/SopPortalState";
+import Login from "./components/Login";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/createNew" element={<CreateNew />} />
           <Route path="/viewCreated" element={<ViewCreated />} />
           <Route path="/sent" element={<Sent />} />
+          <Route path="/login" element={<Login />}/>
         </Routes>
       </Router>
       </SopPortalState>

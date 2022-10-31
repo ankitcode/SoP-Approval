@@ -6,7 +6,7 @@ export const ViewCreated = () => {
   const context = useContext(SopPortalContext);
   const { sopPortalData, setSopPortalData } = context;
   return (
-    <table className="table">
+    <table className="table container mt-5">
       <thead>
         <tr>
           <th>S.No</th>

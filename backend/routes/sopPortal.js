@@ -68,10 +68,11 @@ router.post("/addSoPData", fetchuser, async (req, res) => {
     });
     const savedsoPPortalData = await soPPortalData.save();
 
-    res.json(savedsoPPortalData);
+    return res.json(savedsoPPortalData);
+    
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Internal server error");
+    return res.status(500).send("Internal server error");
   }
 });
 
@@ -82,7 +83,6 @@ router.put("/updateSop/:id", fetchuser, async (req, res) => {
     if (!sopData) {
       return res.status(404).send("Not Found");
     }
-
     sopData = await SoPPortalData.findByIdAndUpdate(req.params.id, {
       $push: {
         sentDetails: {
@@ -94,6 +94,7 @@ router.put("/updateSop/:id", fetchuser, async (req, res) => {
       },
       $set: {
         currentlyWith: req.body.sentTo,
+        sentStatus: true,
       },
     });
 
