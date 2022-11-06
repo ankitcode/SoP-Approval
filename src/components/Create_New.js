@@ -56,19 +56,15 @@ export const CreateNew = () => {
         otherInfo: otherInfo,
       };
 
-      const response = await fetch(
-        "/api/sop/addSoPData/",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-type": "application/json",
-            "auth-token":
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjM1OGMwMzg3ZDlhNWUzZWYxZWYyOWQ1In0sImlhdCI6MTY2Njc2MDc2MH0.Hs6WVmanqf_Jq7_BvZHr1fUh88ZqVXSqZVP1wyw7Z3U",
-          },
-          body: JSON.stringify(bodyData),
-        }
-      );
+      const response = await fetch("/api/sop/addSoPData/", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+          "auth-token": localStorage.getItem('token')
+        },
+        body: JSON.stringify(bodyData),
+      });
       const json = await response.json();
       setToUpdate(true);
       console.log(json);
@@ -131,8 +127,7 @@ export const CreateNew = () => {
   const [otherInfo, setOtherInfo] = useState("");
 
   return (
-    <div className="container my-3 pt-5">
-      <div className="w-75 p-4">
+      <div className="container w-100 position-absolute top-0 start-0 pt-5 mt-3">
         <form>
           <fieldset disabled>
             <div className="form-group row mt-2">
@@ -524,12 +519,11 @@ export const CreateNew = () => {
                     id="PTWinSAP"
                     name="shutdownRequisite"
                     disabled={savedStatus ? "disabled" : ""}
-                    value= {shutdownRequisitePTWinSAP}
+                    value={shutdownRequisitePTWinSAP}
                     onChange={(e) => {
-                      if(e.target.value === ""){
+                      if (e.target.value === "") {
                         setShutdownRequisitePTWinSAP("PTWinSAP");
-                      }
-                      else{
+                      } else {
                         setShutdownRequisitePTWinSAP("");
                       }
                     }}
@@ -549,10 +543,9 @@ export const CreateNew = () => {
                     disabled={savedStatus ? "disabled" : ""}
                     value={shutdownRequisitePPE}
                     onChange={(e) => {
-                      if(e.target.value === ""){
+                      if (e.target.value === "") {
                         setShutdownRequisitePPE("ppe");
-                      }
-                      else{
+                      } else {
                         setShutdownRequisitePPE("");
                       }
                     }}
@@ -573,12 +566,11 @@ export const CreateNew = () => {
                     disabled={savedStatus ? "disabled" : ""}
                     value={safetyPEP}
                     onChange={(e) => {
-                      if(e.target.value === ""){
+                      if (e.target.value === "") {
                         setSafetyPEP("SafetyPEP");
-                      }
-                      else{
+                      } else {
                         setSafetyPEP("");
-                      }                      
+                      }
                     }}
                     required
                   />
@@ -596,12 +588,11 @@ export const CreateNew = () => {
                     disabled={savedStatus ? "disabled" : ""}
                     value={presenceEmp}
                     onChange={(e) => {
-                      if(e.target.value === ""){
+                      if (e.target.value === "") {
                         setPresenceEmp("presenceEmp");
-                      }
-                      else{
+                      } else {
                         setPresenceEmp("");
-                      }   
+                      }
                     }}
                     required
                   />
@@ -730,12 +721,13 @@ export const CreateNew = () => {
                     disabled={savedStatus ? "disabled" : ""}
                     value={presenceOfSubMainIncharge}
                     onChange={(e) => {
-                      if(e.target.value === ""){
-                        setPresenceOfSubMainIncharge("presenceOfSubMainIncharge");
-                      }
-                      else{
+                      if (e.target.value === "") {
+                        setPresenceOfSubMainIncharge(
+                          "presenceOfSubMainIncharge"
+                        );
+                      } else {
                         setPresenceOfSubMainIncharge("");
-                      }   
+                      }
                     }}
                     required
                   />
@@ -756,10 +748,9 @@ export const CreateNew = () => {
                     disabled={savedStatus ? "disabled" : ""}
                     value={presenceOfSubIncharge}
                     onChange={(e) => {
-                      if(e.target.value === ""){
+                      if (e.target.value === "") {
                         setPresenceOfSubIncharge("presenceOfSubIncharge");
-                      }
-                      else{
+                      } else {
                         setPresenceOfSubIncharge("");
                       }
                     }}
@@ -943,7 +934,6 @@ export const CreateNew = () => {
           </div>
         </form>
       </div>
-    </div>
   );
 };
 
