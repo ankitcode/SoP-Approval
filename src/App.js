@@ -1,7 +1,11 @@
 import "./App.css";
 import React from "react";
 
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import CreateNew from "./components/Create_New";
@@ -11,9 +15,8 @@ import SopPortalState from "./context/SopPortalState";
 import Login from "./components/Login";
 import Alert from "./components/Alert";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
-import { useEffect } from "react";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [alert, setAlert] = useState(null);
@@ -26,33 +29,60 @@ function App() {
       setAlert(null);
     }, 1500);
   };
-
+  
   const [isAuthenticated, userHasAuthenticated] = useState(false);
-
+  const [userDetails, setUserDetails] = useState({});
+  
   useEffect(() => {
     onLoad();
   }, []);
 
   async function onLoad() {
     try {
-      if (localStorage.getItem("token")) userHasAuthenticated(true);
-      else userHasAuthenticated(false);
+      if (localStorage.getItem("token")) {
+        console.log("authenticated user");
+        const response = await fetch("/api/auth/getUser", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-type": "application/json",
+            "auth-token": localStorage.getItem('token')
+          },
+        });
+        const json = await response.json();
+        setUserDetails(json);
+        userHasAuthenticated(true);
+      } else {
+        console.log("unauthenticated user");
+        userHasAuthenticated(false);
+      }
     } catch (e) {
-      alert(e);
+      console.log(e);
     }
   }
-
+  
   return (
     <>
       <Router>
-        <Navbar />
-        <Alert alert={alert} />
-        <Routes>
-          <Route
-            path="/login"
-            element={!isAuthenticated ? <Login /> : <Navigate to="/" />}
-          />
-        </Routes>
+        <SopPortalState>
+          <Alert alert={alert} />
+          {isAuthenticated ? <Navbar /> : <></>}
+          <Routes>
+            {isAuthenticated ? (
+              <>
+                <Route path="/" element=<Home /> />
+                <Route path="/login" element=<CreateNew userDetails= {userDetails}/> />
+                <Route path="/createNew" element=<CreateNew userDetails= {userDetails}/> />
+                <Route path="/viewCreated" element=<ViewCreated /> />
+                <Route path="/sent" element=<Sent /> />
+              </>
+            ) : (
+              <>
+                <Route path={window.location.pathname} element=<Login /> />
+              </>
+            )}
+          </Routes>
+        </SopPortalState>
       </Router>
     </>
   );

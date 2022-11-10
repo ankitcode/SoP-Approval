@@ -1,12 +1,14 @@
 import React from "react";
 import { useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export const Navbar = () => {
-  let navigate = useNavigate();
+  //let navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    console.log("logout");
+    window.location.reload();
+    //navigate("/login");
   };
 
   let location = useLocation();

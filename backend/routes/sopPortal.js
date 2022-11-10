@@ -7,7 +7,10 @@ const User = require("../models/User");
 // Get SoP Data using GET "/api/auth/fetchSoPData". Login required
 router.get("/fetchSoPData", fetchuser, async (req, res) => {
   try {
-    const sopData = await SoPPortalData.find({ user: req.user.id, sentDetails: [] });
+    const sopData = await SoPPortalData.find({
+      user: req.user.id,
+      sentDetails: [],
+    });
     res.json(sopData);
   } catch (error) {
     console.error(error.message);
@@ -69,7 +72,6 @@ router.post("/addSoPData", fetchuser, async (req, res) => {
     const savedsoPPortalData = await soPPortalData.save();
 
     return res.json(savedsoPPortalData);
-    
   } catch (error) {
     console.error(error.message);
     return res.status(500).send("Internal server error");
@@ -78,6 +80,68 @@ router.post("/addSoPData", fetchuser, async (req, res) => {
 
 // Update sopPoratlData using: PUT "/api/sop/updateSop". Login required
 router.put("/updateSop/:id", fetchuser, async (req, res) => {
+  try {
+    let sopData = await SoPPortalData.findById(req.params.id);
+    if (!sopData) {
+      return res.status(404).send("Not Found");
+    }
+    const {
+      description,
+      maintenanceDate,
+      shutdown,
+      shutdownType,
+      workDetails,
+      shutdownElement,
+      premises,
+      shutdownWorkScope,
+      shutdownRequisite,
+      isolationSequence,
+      esCloseOperationSequence,
+      restorationSequence,
+      esOpenOperationSequence,
+      presenceOfEmp,
+      additionalSupervision,
+      rtamcCheck,
+      siteCheck,
+      remarks,
+      otherInfo,
+    } = req.body;
+    //console.log(req.user.id)
+    sopData = await SoPPortalData.findByIdAndUpdate(req.params.id, {
+      $set: {
+        description,
+        maintenanceDate,
+        shutdown,
+        shutdownType,
+        workDetails,
+        shutdownElement,
+        premises,
+        shutdownWorkScope,
+        shutdownRequisite,
+        isolationSequence,
+        esCloseOperationSequence,
+        restorationSequence,
+        esOpenOperationSequence,
+        presenceOfEmp,
+        additionalSupervision,
+        rtamcCheck,
+        siteCheck,
+        remarks,
+        otherInfo,
+      },
+    });
+
+    sopData = await SoPPortalData.findById(req.params.id);
+    //console.log(sopData)
+    res.json({ sopData });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal server error");
+  }
+});
+
+// Send sopPoratlData using: PUT "/api/sop/sendSop". Login required
+router.put("/sendSop/:id", fetchuser, async (req, res) => {
   try {
     let sopData = await SoPPortalData.findById(req.params.id);
     if (!sopData) {

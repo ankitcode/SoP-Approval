@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 export const Login = (props) => {
   const [empNo, setEmpNo] = useState("");
   const [password, setPassword] = useState("");
-  let navigate = useNavigate();
-
+  //const navigate = useNavigate();
   const login = async (e) => {
     e.preventDefault();
     try {
@@ -24,7 +23,9 @@ export const Login = (props) => {
       const json = await response.json();
       if (json.success){
           localStorage.setItem('token', json.authToken);
-          navigate("/createNew");
+          console.log(json.authToken);
+          window.location.reload();
+          //navigate("/createNew");
       }else{
         props.showAlert("Invalid Credentials", "danger");
       }
@@ -34,7 +35,7 @@ export const Login = (props) => {
     }
   };
   return (
-    <div className="container" position="relative">
+    <div className="container" position="relative" >
       <form className="form-signin">
         <h1 className="h3 mb-3 font-weight-normal" align="center">
           Sign In
