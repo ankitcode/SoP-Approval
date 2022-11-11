@@ -1,10 +1,13 @@
 import React from "react";
 import { useState } from "react";
+import SendForm from "./SendForm";
 
 export const CreateNew = (props) => {
   const [savedStatus, setSavedStatus] = useState(false);
   const [toUpdate, setToUpdate] = useState(false);
   const [id, setId] = useState("");
+  const [modalShow, setModalShow] = useState(false);
+  const [allUserDetails, setAllUserDetails] = useState([]);
   //console.log(props.userDetails);
   const saveForm = async (e) => {
     e.preventDefault();
@@ -56,32 +59,33 @@ export const CreateNew = (props) => {
         remarks: remarks,
         otherInfo: otherInfo,
       };
-      console.log(JSON.stringify(bodyData));
-      if(!toUpdate){
-      const response = await fetch("/api/sop/addSoPData/", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-        },
-        body: JSON.stringify(bodyData),
-      });
-      const json = await response.json();
-      setId(json._id);
-      setToUpdate(true);
-    }else{
-      const response = await fetch(`/api/sop/updateSop/${id}`, {
-        method: "PUT",
-        headers: {
-          Accept: "application/json",
-          "Content-type": "application/json",
-          "auth-token": localStorage.getItem("token"),
-        },
-        body: JSON.stringify(bodyData),
-      });
-      const json = await response.json();
-    }
+
+      //console.log(JSON.stringify(bodyData));
+      if (!toUpdate) {
+        const response = await fetch("/api/sop/addSoPData/", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+          body: JSON.stringify(bodyData),
+        });
+        const json = await response.json();
+        setId(json._id);
+        setToUpdate(true);
+      } else {
+        const response = await fetch(`/api/sop/updateSop/${id}`, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-type": "application/json",
+            "auth-token": localStorage.getItem("token"),
+          },
+          body: JSON.stringify(bodyData),
+        });
+        const json = await response.json();
+      }
       setSavedStatus(true);
       //console.log(json);
     } catch (error) {
@@ -89,17 +93,46 @@ export const CreateNew = (props) => {
       console.error(error);
     }
   };
+
+
   const editForm = (e) => {
     e.preventDefault();
     setSavedStatus(false);
   };
-  const sendForm = (e) => {
+
+
+  const sendForm = async (e) => {
     e.preventDefault();
-    if(savedStatus){
-      
-    }else{
-      console.log("Save form first");
+    try {
+      const response = await fetch("/api/auth/getAllUsers", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      });
+
+      const temp = [];
+      const json = await response.json();
+      for (var i = 0; i < json.length; i++){
+        var obj = json[i];
+        const data = {
+          userid :  obj["_id"],
+          userdata: obj["name"] + ", " + obj["post"] + ", " + obj["location"]
+        }
+        temp.push(obj["name"] + ", " + obj["post"] + ", " + obj["location"]);
+      }
+      setAllUserDetails(temp);
+    } catch (e) {
+      console.log(e);
     }
+    
+   // if (savedStatus) {
+      setModalShow(true);
+    //} else {
+      //console.log("Save form first");
+    //}
   };
 
   const disablePastDate = () => {
@@ -125,7 +158,9 @@ export const CreateNew = (props) => {
   const [otherPremises, setOtherPremises] = useState("");
   const [powergridScope, setPowergridScope] = useState("");
   const [otherScope, setOtherScope] = useState("");
-  const [shutdownRequisitePTWinSAP, setShutdownRequisitePTWinSAP] = useState("");
+  const [shutdownRequisitePTWinSAP, setShutdownRequisitePTWinSAP] = useState(
+    ""
+  );
   const [shutdownRequisitePPE, setShutdownRequisitePPE] = useState("");
   const [safetyPEP, setSafetyPEP] = useState("");
   const [presenceEmp, setPresenceEmp] = useState("");
@@ -133,7 +168,9 @@ export const CreateNew = (props) => {
   const [esCloseOperationSequence, setESCloseOperationSequence] = useState("");
   const [restorationSequence, setRestorationSequence] = useState("");
   const [esOpenOperationSequence, setESOpenOperationSequence] = useState("");
-  const [presenceOfSubMainIncharge, setPresenceOfSubMainIncharge] = useState("");
+  const [presenceOfSubMainIncharge, setPresenceOfSubMainIncharge] = useState(
+    ""
+  );
   const [presenceOfSubIncharge, setPresenceOfSubIncharge] = useState("");
   const [alternateEmp, setAlternateEmp] = useState("");
   const [additionalSupervision, setAdditionalSupervision] = useState("");
@@ -932,6 +969,13 @@ export const CreateNew = (props) => {
             >
               Send
             </button>
+            <SendForm
+              show={modalShow}
+              onHide={() => setModalShow(false)}
+              userid={props.userDetails._id}
+              formid={id}
+              alluserdetails={allUserDetails}
+            />
           </div>
         </div>
       </form>

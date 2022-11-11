@@ -70,7 +70,9 @@ router.post(
 router.post(
   "/login",
   [
-    body("emp_no", "Enter a valid Employee Number").isNumeric().exists(),
+    body("emp_no", "Enter a valid Employee Number")
+      .isNumeric()
+      .exists(),
     body("password", "Password cannot be blank").exists(),
   ],
   async (req, res) => {
@@ -87,13 +89,19 @@ router.post(
       if (!user) {
         return res
           .status(400)
-          .json({ success, error: "Please try to login with correct credentials" });
+          .json({
+            success,
+            error: "Please try to login with correct credentials",
+          });
       }
       const passwordCompare = await bcrypt.compare(password, user.password);
       if (!password) {
         return res
           .status(400)
-          .json({ success, error: "Please try to login with correct credentials" });
+          .json({
+            success,
+            error: "Please try to login with correct credentials",
+          });
       }
       const data = {
         user: {
@@ -101,7 +109,7 @@ router.post(
         },
       };
       const authToken = jwt.sign(data, JWT_SECRET);
-      
+
       success = true;
       res.json({ success, authToken });
     } catch (error) {
@@ -116,6 +124,21 @@ router.post("/getUser", fetchuser, async (req, res) => {
   try {
     userId = req.user.id;
     const user = await User.findById(userId).select("-password");
+    res.send(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal server error");
+  }
+});
+
+// Get all user IDs except current user using POST "/api/auth/getAllUser"
+router.post("/getAllUsers", fetchuser, async (req, res) => {
+  try {
+    const user = await User.find(
+      { _id: { $nin: [req.user.id] } },
+      { _id: 1, name: 1, location: 1, post: 1 }
+    );
+    //console.log(user);
     res.send(user);
   } catch (error) {
     console.error(error.message);
