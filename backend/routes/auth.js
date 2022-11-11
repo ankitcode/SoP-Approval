@@ -131,15 +131,30 @@ router.post("/getUser", fetchuser, async (req, res) => {
   }
 });
 
-// Get all user IDs except current user using POST "/api/auth/getAllUser"
+// Get all users except current user using POST "/api/auth/getAllUser". Login required
 router.post("/getAllUsers", fetchuser, async (req, res) => {
   try {
     const user = await User.find(
       { _id: { $nin: [req.user.id] } },
-      { _id: 1, name: 1, location: 1, post: 1 }
+      { _id: 1, name: 1, location: 1, post: 1, emp_no: 1 }
     );
     //console.log(user);
     res.send(user);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal server error");
+  }
+});
+
+// Get User Id using POST "/api/auth/getUserId". Login required
+router.post("/getUserId", fetchuser, async (req, res) => {
+  try {
+    const userid = await User.find(
+      { emp_no: { $in: [req.body.emp_no] } },
+      { _id: 1 }
+    );
+    //console.log(user);
+    res.send(userid);
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal server error");

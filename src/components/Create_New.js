@@ -113,15 +113,13 @@ export const CreateNew = (props) => {
         },
       });
 
-      const temp = [];
       const json = await response.json();
+      
+      const temp = [];
       for (var i = 0; i < json.length; i++){
         var obj = json[i];
-        const data = {
-          userid :  obj["_id"],
-          userdata: obj["name"] + ", " + obj["post"] + ", " + obj["location"]
-        }
-        temp.push(obj["name"] + ", " + obj["post"] + ", " + obj["location"]);
+        const data = obj["name"] + ", " + obj["post"] + ", " + obj["location"] + " (" + obj["emp_no"] +")"
+        temp.push(data);
       }
       setAllUserDetails(temp);
     } catch (e) {

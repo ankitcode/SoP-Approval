@@ -6,14 +6,40 @@ import SearchBarDropdown from "./SearchBarDropdown";
 import { useState } from "react";
 
 function SendForm(props) {
-
   const [userDetails, setUserDetails] = useState([]);
-  const onInputChange = (event) => {
+  const [sendToUserDetails, setSendToUserDetails] = useState("");
+  const [sendTo, setSendTo] = useState("");
+  const [remarks, setRemarks] = useState("");
+
+  const onInputChange = (e) => {
     setUserDetails(
       props.alluserdetails.filter((userdetail) =>
-        userdetail.includes(event.target.value)
+        userdetail.includes(e.target.value)
       )
     );
+  };
+
+  const submitForm = async (e) => {
+    try {
+      const emp_no = sendToUserDetails.split("(")[1].split(")")[0];
+      const bodyData = {
+        emp_no: emp_no,
+      };
+
+      const response = await fetch("/api/auth/getUserId", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify(bodyData),
+      });
+      const json = await response.json();
+      setSendTo(json[0]["_id"]);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -36,6 +62,7 @@ function SendForm(props) {
               <SearchBarDropdown
                 options={userDetails}
                 onInputChange={onInputChange}
+                setSendToUserDetails={setSendToUserDetails}
               />
             </Form.Group>
 
@@ -45,12 +72,16 @@ function SendForm(props) {
                 as="textarea"
                 placeholder="Enter Remarks"
                 style={{ height: "100px" }}
+                value={remarks}
+                onChange={(e) => {
+                  setRemarks(e.target.value);
+                }}
               />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={props.onHide}>
+          <Button variant="secondary" onClick={submitForm}>
             Send
           </Button>
         </Modal.Footer>
