@@ -37,6 +37,23 @@ function SendForm(props) {
       });
       const json = await response.json();
       setSendTo(json[0]["_id"]);
+
+      // Update sent details in form 
+      const bodyDataSend = {
+        remarks: remarks,
+        sentTo: json[0]["_id"],
+      };
+      const responseSend = await fetch(`/api/sop/sendSop/${props.formid}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify(bodyDataSend),
+      });
+      const jsonSend = await responseSend.json();
+      console.log(jsonSend);
     } catch (error) {
       console.log(error);
     }

@@ -33,6 +33,16 @@ export const Navbar = () => {
 
             <div className="collapse navbar-collapse" id="navbarsExample05">
               <ul className="navbar-nav mr-auto">
+              <li className="nav-item">
+                  <Link
+                    to="/inbox"
+                    className={`nav-link ${
+                      location.pathname === "/inbox" ? "active" : ""
+                    }`}
+                  >
+                    Inbox
+                  </Link>
+                </li>
                 <li className="nav-item">
                   <Link
                     to="/createNew"
@@ -41,16 +51,6 @@ export const Navbar = () => {
                     }`}
                   >
                     Create New
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    to="/viewCreated"
-                    className={`nav-link ${
-                      location.pathname === "/viewCreated" ? "active" : ""
-                    }`}
-                  >
-                    View Created
                   </Link>
                 </li>
                 <li className="nav-item">

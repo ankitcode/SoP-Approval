@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 //import SopPortalContext from "../context/sopPortalContext";
 //import ViewCreatedItem from "./ViewCreatedItem";
 
-export const ViewCreated = () => {
+export const Inbox = () => {
   //const context = useContext(SopPortalContext);
   const [sopPortalData, setSopPortalData] = useState([]);
   useEffect(() => {
@@ -51,4 +51,4 @@ export const ViewCreated = () => {
   );
 };
 
-export default ViewCreated;
+export default Inbox;

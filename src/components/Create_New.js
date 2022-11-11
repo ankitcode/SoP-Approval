@@ -94,12 +94,10 @@ export const CreateNew = (props) => {
     }
   };
 
-
   const editForm = (e) => {
     e.preventDefault();
     setSavedStatus(false);
   };
-
 
   const sendForm = async (e) => {
     e.preventDefault();
@@ -114,23 +112,31 @@ export const CreateNew = (props) => {
       });
 
       const json = await response.json();
-      
+
       const temp = [];
-      for (var i = 0; i < json.length; i++){
+      for (var i = 0; i < json.length; i++) {
         var obj = json[i];
-        const data = obj["name"] + ", " + obj["post"] + ", " + obj["location"] + " (" + obj["emp_no"] +")"
+        const data =
+          obj["name"] +
+          ", " +
+          obj["post"] +
+          ", " +
+          obj["location"] +
+          " (" +
+          obj["emp_no"] +
+          ")";
         temp.push(data);
       }
       setAllUserDetails(temp);
     } catch (e) {
       console.log(e);
     }
-    
-   // if (savedStatus) {
+
+    if (savedStatus) {
       setModalShow(true);
-    //} else {
-      //console.log("Save form first");
-    //}
+    } else {
+      console.log("Save form first");
+    }
   };
 
   const disablePastDate = () => {

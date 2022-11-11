@@ -9,7 +9,7 @@ import {
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import CreateNew from "./components/Create_New";
-import ViewCreated from "./components/View_Created";
+import Inbox from "./components/Inbox";
 import Sent from "./components/Sent";
 import SopPortalState from "./context/SopPortalState";
 import Login from "./components/Login";
@@ -73,7 +73,7 @@ function App() {
                 <Route path="/" element=<Home /> />
                 <Route path="/login" element=<CreateNew userDetails= {userDetails}/> />
                 <Route path="/createNew" element=<CreateNew userDetails= {userDetails}/> />
-                <Route path="/viewCreated" element=<ViewCreated /> />
+                <Route path="/inbox" element=<Inbox /> />
                 <Route path="/sent" element=<Sent /> />
               </>
             ) : (
