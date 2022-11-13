@@ -8,7 +8,8 @@ import {
 } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
-import CreateNew from "./components/Create_New";
+import CreateNew from "./components/CreateNew";
+import CreateNewform from "./components/Create_Newform";
 import Inbox from "./components/Inbox";
 import Sent from "./components/Sent";
 import SopPortalState from "./context/SopPortalState";
@@ -62,7 +63,7 @@ function App() {
   }
   
   return (
-    <>
+    <div>
       <Router>
         <SopPortalState>
           <Alert alert={alert} />
@@ -72,7 +73,7 @@ function App() {
               <>
                 <Route path="/" element=<Home /> />
                 <Route path="/login" element=<CreateNew userDetails= {userDetails}/> />
-                <Route path="/createNew" element=<CreateNew userDetails= {userDetails}/> />
+                <Route path="/createNew" element=<CreateNewform userDetails= {userDetails}/> />
                 <Route path="/inbox" element=<Inbox /> />
                 <Route path="/sent" element=<Sent /> />
               </>
@@ -84,7 +85,7 @@ function App() {
           </Routes>
         </SopPortalState>
       </Router>
-    </>
+    </div>
   );
 }
 

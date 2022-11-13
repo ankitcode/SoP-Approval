@@ -4,12 +4,27 @@ const fetchuser = require("../middleware/fetchuser");
 const SoPPortalData = require("../models/SoPPortalData");
 const User = require("../models/User");
 
-// Get SoP Data using GET "/api/auth/fetchSoPData". Login required
+//db.users.find({awards: {$elemMatch: {award:'National Medal', year:1975}}})
+
+// Get SoP Sent Data using GET "/api/auth/fetchSoPSentData". Login required
+router.get("/fetchSoPSentData", fetchuser, async (req, res) => {
+  try {
+    const sopData = await SoPPortalData.find({
+      sentDetails: {$elemMatch: {sentBy: req.user.id}},
+    });
+    res.json(sopData);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Internal server error");
+  }
+});
+
+
+// Get SoP Created Data using GET "/api/auth/fetchSoPData". Login required
 router.get("/fetchSoPData", fetchuser, async (req, res) => {
   try {
     const sopData = await SoPPortalData.find({
-      user: req.user.id,
-      sentDetails: [],
+      currentlyWith: req.user.id,
     });
     res.json(sopData);
   } catch (error) {
@@ -68,6 +83,7 @@ router.post("/addSoPData", fetchuser, async (req, res) => {
       siteCheck,
       remarks,
       otherInfo,
+      currentlyWith: req.user.id,
     });
     const savedsoPPortalData = await soPPortalData.save();
 

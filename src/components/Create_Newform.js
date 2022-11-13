@@ -1,8 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import SendForm from "./SendForm";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import { Container } from "react-bootstrap";
 
-export const CreateNew = (props) => {
+export const CreateNewform = (props) => {
   const [savedStatus, setSavedStatus] = useState(false);
   const [toUpdate, setToUpdate] = useState(false);
   const [id, setId] = useState("");
@@ -184,48 +189,45 @@ export const CreateNew = (props) => {
   const [otherInfo, setOtherInfo] = useState("");
 
   return (
-    <div className="container w-100 position-absolute top-0 start-0 pt-5 mt-3">
-      <form>
+    <Container>
+      <Form>
         <fieldset disabled>
-          <div className="form-group row mt-2">
-            <label htmlFor="region" className="col-sm-4 col-form-label">
+          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+            <Form.Label column sm={2}>
               Region
-            </label>
-            <div className="col-sm-5">
-              <input
+            </Form.Label>
+            <Col sm={6}>
+              <Form.Control
                 type="text"
                 id="region"
-                className="form-control"
                 placeholder={props.userDetails.location}
                 name="region"
               />
-            </div>
-          </div>
+            </Col>
+          </Form.Group>
 
-          <div className="form-group row mt-2">
-            <label htmlFor="location" className="col-sm-4 col-form-label">
+          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+            <Form.Label column sm={2}>
               Name of Substation
-            </label>
-            <div className="col-sm-5">
-              <input
+            </Form.Label>
+            <Col sm={6}>
+              <Form.Control
                 type="text"
                 id="location"
-                className="form-control"
                 placeholder={props.userDetails.region}
                 name="location"
               />
-            </div>
-          </div>
+            </Col>
+          </Form.Group>
         </fieldset>
 
-        <div className="form-group row mt-2">
-          <label htmlFor="description" className="col-sm-4 col-form-label">
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+          <Form.Label column sm={2}>
             Brief Description
-          </label>
-          <div className="col-sm-5">
-            <input
+          </Form.Label>
+          <Col sm={6}>
+            <Form.Control
               type="text"
-              className="form-control"
               id="description"
               name="description"
               disabled={savedStatus ? "disabled" : ""}
@@ -235,17 +237,16 @@ export const CreateNew = (props) => {
               }}
               required
             />
-          </div>
-        </div>
+          </Col>
+        </Form.Group>
 
-        <div className="form-group row mt-2">
-          <label htmlFor="maintenanceDate" className="col-sm-4 col-form-label">
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+          <Form.Label column sm={2}>
             Maintenance Date
-          </label>
-          <div className="col-sm-5">
-            <input
+          </Form.Label>
+          <Col sm={6}>
+            <Form.Control
               type="date"
-              className="form-control"
               id="maintenanceDate"
               name="maintenanceDate"
               disabled={savedStatus ? "disabled" : ""}
@@ -256,20 +257,16 @@ export const CreateNew = (props) => {
               min={disablePastDate()}
               required
             />
-          </div>
-        </div>
+          </Col>
+        </Form.Group>
 
-        <div className="form-group row mt-2">
-          <label
-            htmlFor="shutdownStartDate"
-            className="col-sm-4 col-form-label"
-          >
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+          <Form.Label column sm={2}>
             Shutdown Start Date
-          </label>
-          <div className="col-sm-5">
-            <input
+          </Form.Label>
+          <Col sm={6}>
+            <Form.Control
               type="date"
-              className="form-control"
               id="shutdownStartDate"
               name="shutdownStartDate"
               disabled={savedStatus ? "disabled" : ""}
@@ -280,17 +277,16 @@ export const CreateNew = (props) => {
               min={disablePastDate()}
               required
             />
-          </div>
-        </div>
+          </Col>
+        </Form.Group>
 
-        <div className="form-group row mt-2">
-          <label htmlFor="shutdownEndDate" className="col-sm-4 col-form-label">
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+          <Form.Label column sm={2}>
             Shutdown End Date
-          </label>
-          <div className="col-sm-5">
-            <input
+          </Form.Label>
+          <Col sm={6}>
+            <Form.Control
               type="date"
-              className="form-control"
               id="shutdownEndDate"
               name="shutdownEndDate"
               disabled={savedStatus ? "disabled" : ""}
@@ -301,86 +297,70 @@ export const CreateNew = (props) => {
               min={disablePastDate()}
               required
             />
-          </div>
-        </div>
+          </Col>
+        </Form.Group>
 
         <fieldset>
-          <div className="form-group row mt-2">
-            <legend className="col-form-label col-sm-4 pt-0">
+          <Form.Group as={Row} className="mb-3">
+            <Form.Label as="legend" column sm={2}>
               Type of Shutdown
-            </legend>
-            <div className="col-sm-5">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="shutdownType"
-                  id="occ"
-                  disabled={savedStatus ? "disabled" : ""}
-                  value={shutdownTypeOCC}
-                  onClick={(e) => {
-                    setShutdownTypeOCC("occ");
-                    setShutdownTypePostOCC("");
-                    setShutdownTypeEmergency("");
-                  }}
-                  required
-                />
-                <label className="form-check-label" htmlFor="occ">
-                  OCC
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="shutdownType"
-                  id="postOCC"
-                  value={shutdownTypePostOCC}
-                  onChange={(e) => {
-                    setShutdownTypePostOCC("postOCC");
-                    setShutdownTypeOCC("");
-                    setShutdownTypeEmergency("");
-                  }}
-                  disabled={savedStatus ? "disabled" : ""}
-                  required
-                />
-                <label className="form-check-label" htmlFor="postOCC">
-                  Post OCC
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="shutdownType"
-                  id="emergency"
-                  value={shutdownTypeEmergency}
-                  onChange={(e) => {
-                    setShutdownTypeEmergency("emergency");
-                    setShutdownTypePostOCC("");
-                    setShutdownTypeOCC("");
-                  }}
-                  disabled={savedStatus ? "disabled" : ""}
-                  required
-                />
-                <label className="form-check-label" htmlFor="emergency">
-                  Emergency
-                </label>
-              </div>
-            </div>
-          </div>
+            </Form.Label>
+            <Col sm={6}>
+              <Form.Check
+                label="OCC"
+                type="radio"
+                name="shutdownType"
+                id="occ"
+                disabled={savedStatus ? "disabled" : ""}
+                value={shutdownTypeOCC}
+                onClick={(e) => {
+                  setShutdownTypeOCC("occ");
+                  setShutdownTypePostOCC("");
+                  setShutdownTypeEmergency("");
+                }}
+                required
+              />
+              <Form.Check
+                type="radio"
+                label="Post OCC"
+                name="shutdownType"
+                id="postOCC"
+                value={shutdownTypePostOCC}
+                onChange={(e) => {
+                  setShutdownTypePostOCC("postOCC");
+                  setShutdownTypeOCC("");
+                  setShutdownTypeEmergency("");
+                }}
+                disabled={savedStatus ? "disabled" : ""}
+                required
+              />
+              <Form.Check
+                type="radio"
+                label="Emergency"
+                name="shutdownType"
+                id="emergency"
+                value={shutdownTypeEmergency}
+                onChange={(e) => {
+                  setShutdownTypeEmergency("emergency");
+                  setShutdownTypePostOCC("");
+                  setShutdownTypeOCC("");
+                }}
+                disabled={savedStatus ? "disabled" : ""}
+                required
+              />
+            </Col>
+          </Form.Group>
         </fieldset>
 
-        <div className="form-group row mt-2">
-          <label htmlFor="shutdownReason" className="col-sm-4 col-form-label">
-            Reason of Shutdown
-          </label>
-          <div className="col-sm-5">
-            <textarea
-              type="text"
-              className="form-control"
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+          <Form.Label column sm={2}>
+          Reason of Shutdown
+          </Form.Label>
+          <Col sm={6}>
+            <Form.Control
+              as="textarea"
               id="shutdownReason"
-              rows="3"
+              rows={3}
               name="shutdownReason"
               disabled={savedStatus ? "disabled" : ""}
               value={shutdownReason}
@@ -389,85 +369,88 @@ export const CreateNew = (props) => {
               }}
               required
             />
-          </div>
-        </div>
+          </Col>
+        </Form.Group>
 
-        <fieldset>
-          <div className="form-group row mt-2">
-            <label className="col-sm-9 col-form-label">
-              Details of Work to be carried out:
-            </label>
-          </div>
-          <div className="form-group row">
-            <label htmlFor="risk" className="col-sm-4 col-form-label">
-              “Risks (Safety Risks/System Risk) Identified during the work”
-            </label>
-            <div className="col-sm-5">
-              <textarea
-                type="text"
-                className="form-control"
-                id="risk"
-                rows="2"
-                name="risk"
-                disabled={savedStatus ? "disabled" : ""}
-                value={workRisk}
-                onChange={(e) => {
-                  setWorkRisk(e.target.value);
-                }}
-                required
-              />
-            </div>
-          </div>
-
-          <div className="form-group row mt-2">
-            <label htmlFor="mitigation" className="col-sm-4 col-form-label">
-              Mitigation Measures planned for above Risks.
-            </label>
-            <div className="col-sm-5">
-              <textarea
-                type="text"
-                className="form-control"
-                id="mitigation"
-                rows="2"
-                name="mitigation"
-                disabled={savedStatus ? "disabled" : ""}
-                value={workRiskMitigation}
-                onChange={(e) => {
-                  setWorkRiskMitigation(e.target.value);
-                }}
-                required
-              />
-            </div>
-          </div>
-        </fieldset>
-
-        <div className="form-group row mt-2">
-          <label htmlFor="shutdownElement" className="col-sm-4 col-form-label">
-            Bays No./Bus/Element for Shutdown
-          </label>
-          <div className="col-sm-5">
-            <input
-              type="text"
-              className="form-control"
-              id="shutdownElement"
-              name="shutdownElement"
+<fieldset>
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+          <Form.Label row sm={8}>
+          Details of Work to be carried out:
+          </Form.Label>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+          <Form.Label column sm={2}>
+          “Risks (Safety Risks/System Risk) Identified during the work”
+          </Form.Label>
+          <Col sm={6}>
+            <Form.Control
+              as="textarea"
+              id="risk"
+              rows={3}
+              name="risk"
               disabled={savedStatus ? "disabled" : ""}
-              value={shutdownElement}
+              value={workRisk}
               onChange={(e) => {
-                setShutdownElement(e.target.value);
+                setWorkRisk(e.target.value);
               }}
               required
             />
-          </div>
-        </div>
+          </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+          <Form.Label column sm={2}>
+          Mitigation Measures planned for above Risks
+          </Form.Label>
+          <Col sm={6}>
+            <Form.Control
+              as="textarea"
+              className="form-control"
+              id="mitigation"
+              rows={3}
+              name="mitigation"
+              disabled={savedStatus ? "disabled" : ""}
+              value={workRiskMitigation}
+              onChange={(e) => {
+                setWorkRiskMitigation(e.target.value);
+              }}
+              required
+            />
+          </Col>
+          </Form.Group>
+        </fieldset>
 
-        <fieldset>
-          <div className="form-group row mt-2">
-            <legend className="col-form-label col-sm-4 pt-0">Premises</legend>
-            <div className="col-sm-5">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+          <Form.Label column sm={2}>
+          Bays No/Bus/Element for Shutdown
+          </Form.Label>
+          <Col sm={6}>
+            <Form.Control
+               type="text"
+               id="shutdownElement"
+               name="shutdownElement"
+               disabled={savedStatus ? "disabled" : ""}
+               value={shutdownElement}
+               onChange={(e) => {
+                 setShutdownElement(e.target.value);
+               }}
+               required
+            />
+          </Col>
+          </Form.Group>
+
+
+
+
+
+
+          <fieldset>
+          <Form.Group as={Row} className="mb-3">
+            <Form.Label as="legend" column sm={2}>
+            Premises
+            </Form.Label>
+            <Col sm={6}>
+              <Form.Check
+                label="POWERGRID Premises"
                   type="radio"
                   name="premises"
                   id="powergridPremises"
@@ -478,14 +461,9 @@ export const CreateNew = (props) => {
                     setOtherPremises("");
                   }}
                   required
-                />
-                <label className="form-check-label" htmlFor="powergridPremises">
-                  Shutdown in POWERGRID Premises
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
+              />
+              <Form.Check
+                label="Other Utility Premises"
                   type="radio"
                   name="premises"
                   id="otherPremises"
@@ -496,42 +474,35 @@ export const CreateNew = (props) => {
                   }}
                   disabled={savedStatus ? "disabled" : ""}
                   required
-                />
-                <label className="form-check-label" htmlFor="otherPremises">
-                  Shutdown in other utility Premises
-                </label>
-              </div>
-            </div>
-          </div>
+              />
+            </Col>
+          </Form.Group>
         </fieldset>
 
+
+
+
         <fieldset>
-          <div className="form-group row mt-2">
-            <legend className="col-form-label col-sm-4 pt-0">
-              Shutdown Work Scope
-            </legend>
-            <div className="col-sm-5">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="shutdownScope"
-                  id="powergridScope"
-                  value={powergridScope}
-                  onChange={(e) => {
-                    setPowergridScope("powergridScope");
-                    setOtherScope("");
-                  }}
-                  disabled={savedStatus ? "disabled" : ""}
-                  required
-                />
-                <label className="form-check-label" htmlFor="powergridScope">
-                  By POWERGRID
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
+          <Form.Group as={Row} className="mb-3">
+            <Form.Label as="legend" column sm={2}>
+            Shutdown Work Scope
+            </Form.Label>
+            <Col sm={6}>
+              <Form.Check
+                label="Powergrid Scope"
+                type="radio"
+                name="shutdownScope"
+                id="powergridScope"
+                value={powergridScope}
+                onChange={(e) => {
+                  setPowergridScope("powergridScope");
+                  setOtherScope("");
+                }}
+                disabled={savedStatus ? "disabled" : ""}
+                required
+              />
+              <Form.Check
+                label="Other Utilities"
                   type="radio"
                   name="shutdownScope"
                   id="otherScope"
@@ -542,14 +513,14 @@ export const CreateNew = (props) => {
                   }}
                   disabled={savedStatus ? "disabled" : ""}
                   required
-                />
-                <label className="form-check-label" htmlFor="otherScope">
-                  By Other Utilities
-                </label>
-              </div>
-            </div>
-          </div>
+              />
+            </Col>
+          </Form.Group>
         </fieldset>
+
+
+
+
 
         <fieldset>
           <div className="form-group row mt-2">
@@ -652,19 +623,18 @@ export const CreateNew = (props) => {
           </div>
         </fieldset>
 
-        <div className="form-group row mt-2">
-          <label
-            htmlFor="isolationSequence"
-            className="col-sm-4 col-form-label"
-          >
-            Sequence of Isolation (CB & Isolator) By RTAMC
-          </label>
-          <div className="col-sm-5">
-            <textarea
-              type="text"
-              className="form-control"
+
+
+<fieldset>
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+          <Form.Label column sm={2}>
+          Sequence of Isolation (CB & Isolator) By RTAMC
+          </Form.Label>
+          <Col sm={6}>
+            <Form.Control
+              as="textarea"
               id="isolationSequence"
-              rows="2"
+              rows={3}
               name="isolationSequence"
               disabled={savedStatus ? "disabled" : ""}
               value={isolationSequence}
@@ -673,23 +643,18 @@ export const CreateNew = (props) => {
               }}
               required
             />
-          </div>
-        </div>
+          </Col>
+        </Form.Group>
 
-        <div className="form-group row mt-2">
-          <label
-            htmlFor="esCloseOperationSequence"
-            className="col-sm-4 col-form-label"
-          >
-            Sequence for E/S Operation By site (Name of Earth Switch to be
-            closed)
-          </label>
-          <div className="col-sm-5">
-            <textarea
-              type="text"
-              className="form-control"
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+          <Form.Label column sm={2}>
+          Sequence for E/S Operation By site (Name of Earth Switch to be closed)
+          </Form.Label>
+          <Col sm={6}>
+            <Form.Control
+              as="textarea"
               id="esCloseOperationSequence"
-              rows="2"
+              rows={3}
               name="esCloseOperationSequence"
               disabled={savedStatus ? "disabled" : ""}
               value={esCloseOperationSequence}
@@ -698,22 +663,20 @@ export const CreateNew = (props) => {
               }}
               required
             />
-          </div>
-        </div>
+          </Col>
+        </Form.Group>
+        </fieldset>
 
-        <div className="form-group row mt-2">
-          <label
-            htmlFor="restorationSequence"
-            className="col-sm-4 col-form-label"
-          >
-            Sequence of Restoration (CB & Isolator) By RTAMC
-          </label>
-          <div className="col-sm-5">
-            <textarea
-              type="text"
-              className="form-control"
+<fieldset>
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+          <Form.Label column sm={2}>
+          Sequence of Restoration (CB & Isolator) By RTAMC
+          </Form.Label>
+          <Col sm={6}>
+            <Form.Control
+              as="textarea"
               id="restorationSequence"
-              rows="2"
+              rows={3}
               name="restorationSequence"
               disabled={savedStatus ? "disabled" : ""}
               value={restorationSequence}
@@ -722,23 +685,18 @@ export const CreateNew = (props) => {
               }}
               required
             />
-          </div>
-        </div>
+          </Col>
+        </Form.Group>
 
-        <div className="form-group row mt-2">
-          <label
-            htmlFor="esOpenOperationSequence"
-            className="col-sm-4 col-form-label"
-          >
-            Sequence for E/S Operation By site (Name of Earth Switch to be
-            opened)
-          </label>
-          <div className="col-sm-5">
-            <textarea
-              type="text"
-              className="form-control"
+        <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+          <Form.Label column sm={2}>
+          Sequence for E/S Operation By site (Name of Earth Switch to be opened)
+          </Form.Label>
+          <Col sm={6}>
+            <Form.Control
+              as="textarea"
               id="esOpenOperationSequence"
-              rows="2"
+              rows={3}
               name="esOpenOperationSequence"
               disabled={savedStatus ? "disabled" : ""}
               value={esOpenOperationSequence}
@@ -747,8 +705,10 @@ export const CreateNew = (props) => {
               }}
               required
             />
-          </div>
-        </div>
+          </Col>
+        </Form.Group>
+        </fieldset>
+
 
         <fieldset>
           <div className="form-group row mt-2">
@@ -982,9 +942,9 @@ export const CreateNew = (props) => {
             />
           </div>
         </div>
-      </form>
-    </div>
+      </Form>
+    </Container>
   );
 };
 
-export default CreateNew;
+export default CreateNewform;

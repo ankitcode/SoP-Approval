@@ -14,13 +14,14 @@ export const Navbar = () => {
   let location = useLocation();
   useEffect(() => {}, [location]);
   return (
-        <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <div className="wrapper">
+        <nav className="main-header navbar navbar-expand-md navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
           <div className="container">
             <Link to="/" className="navbar-brand">
               AM SoP Approval
             </Link>
             <button
-              className="navbar-toggler"
+              className="navbar-toggler collapsed"
               type="button"
               data-toggle="collapse"
               data-target="#navbarsExample05"
@@ -31,7 +32,7 @@ export const Navbar = () => {
               <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div className="collapse navbar-collapse" id="navbarsExample05">
+            <div className="navbar-collapse collapse" id="navbarsExample05" >
               <ul className="navbar-nav mr-auto">
               <li className="nav-item">
                   <Link
@@ -70,6 +71,7 @@ export const Navbar = () => {
             </button>
           </div>
         </nav>
+        </div>
   );
 };
 
