@@ -30,3 +30,7 @@ code {
   border-bottom: 4px solid \9;
   content: "";
 }
+
+.content-wrapper {
+  background-color: rgb(255, 255, 255);
+}

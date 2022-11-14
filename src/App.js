@@ -8,8 +8,7 @@ import {
 } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
-import CreateNew from "./components/CreateNew";
-import CreateNewform from "./components/Create_Newform";
+import CreateNewform from "./components/CreateNewform";
 import Inbox from "./components/Inbox";
 import Sent from "./components/Sent";
 import SopPortalState from "./context/SopPortalState";
@@ -71,8 +70,8 @@ function App() {
           <Routes>
             {isAuthenticated ? (
               <>
-                <Route path="/" element=<Home /> />
-                <Route path="/login" element=<CreateNew userDetails= {userDetails}/> />
+                <Route path="/" element=<CreateNewform userDetails= {userDetails} /> />
+                <Route path="/login" element=<CreateNewform userDetails= {userDetails}/> />
                 <Route path="/createNew" element=<CreateNewform userDetails= {userDetails}/> />
                 <Route path="/inbox" element=<Inbox /> />
                 <Route path="/sent" element=<Sent /> />
