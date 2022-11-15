@@ -206,7 +206,7 @@ export const CreateNewform = (props) => {
                   <Form.Control
                     type="text"
                     id="region"
-                    placeholder={props.userDetails.location}
+                    placeholder={props.userDetails.region}
                     name="region"
                   />
                 </Col>
@@ -220,7 +220,7 @@ export const CreateNewform = (props) => {
                   <Form.Control
                     type="text"
                     id="location"
-                    placeholder={props.userDetails.region}
+                    placeholder={props.userDetails.location}
                     name="location"
                   />
                 </Col>

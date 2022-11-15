@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
+import { Navigate } from "react-router-dom";
 
 export const Inbox = () => {
 
@@ -37,6 +38,16 @@ export const Inbox = () => {
       sort: true,
       headerStyle: (colum, colIndex) => {
         return { width: "100px", textAlign: "center" };
+      },
+      events: {
+        onClick: (e, column, columnIndex, row, rowIndex) => {
+          console.log(e);
+          console.log(column);
+          console.log(columnIndex);
+          console.log(row);
+          console.log(rowIndex);
+          return (<Navigate to="/createNew" replace={true} />)
+        },
       },
     },
     { dataField: "description", text: "Description", sort: true },
