@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import SopPortalState from "./context/SopPortalState";
 
 export const Inbox = () => {
-
-  const moment= require('moment');
+  const moment = require("moment");
 
   const [sopPortalData, setSopPortalData] = useState([]);
   useEffect(() => {
@@ -31,6 +33,10 @@ export const Inbox = () => {
     }
   }
 
+  const linkFollow = (cell, row, rowIndex, formatExtraData) => {
+    return <Link to= {(row.sentDetails.length===0)? "/prefilledCreateNew" : "/prefilledSent"}>{row.sopID}</Link>;
+  };
+
   const columns = [
     {
       dataField: "sopID",
@@ -39,16 +45,7 @@ export const Inbox = () => {
       headerStyle: (colum, colIndex) => {
         return { width: "100px", textAlign: "center" };
       },
-      events: {
-        onClick: (e, column, columnIndex, row, rowIndex) => {
-          console.log(e);
-          console.log(column);
-          console.log(columnIndex);
-          console.log(row);
-          console.log(rowIndex);
-          return (<Navigate to="/createNew" replace={true} />)
-        },
-      },
+      formatter: linkFollow,
     },
     { dataField: "description", text: "Description", sort: true },
     {
@@ -134,18 +131,18 @@ export const Inbox = () => {
 
   return (
     <div className="content-wrapper">
-    <Container>
-      <BootstrapTable
-        keyField="id"
-        data={sopPortalData}
-        columns={columns}
-        pagination={paginationFactory(options)}
-        striped
-        hover
-        condensed
-        defaultSorted={defaultSorted}
-      />
-    </Container>
+      <Container>
+        <BootstrapTable
+          keyField="id"
+          data={sopPortalData}
+          columns={columns}
+          pagination={paginationFactory(options)}
+          striped
+          hover
+          condensed
+          defaultSorted={defaultSorted}
+        />
+      </Container>
     </div>
   );
 };
